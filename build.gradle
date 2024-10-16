@@ -1,0 +1,54 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'  
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url = 'https://www.jitpack.io'
+    }
+    maven {
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+    maven {
+        url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+group 'com.github.StarDevelopmentLLC'
+version '1.0.0-alpha.1'
+
+processResources {
+    filesMatching("*.yml") {
+        expand(project.properties)
+    }
+}
+
+jar {
+    //destinationDirectory = file(System.getProperty("user.home") + File.separator + "Documents" + File.separator + "JarOutput")
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.21-R0.1-SNAPSHOT'
+    compileOnly 'com.github.StarDevelopmentLLC:StarCore:1.0.0-alpha.42'
+    compileOnly 'me.clip:placeholderapi:2.11.6'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+tasks.compileJava.dependsOn(clean)
+tasks.build.finalizedBy(publishToMavenLocal)
