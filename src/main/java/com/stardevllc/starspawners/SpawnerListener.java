@@ -26,7 +26,7 @@ public class SpawnerListener implements Listener {
             return;
         }
 
-        ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
+        ItemStack item = plugin.getPlayerHandWrapper().getItemInMainHand(e.getPlayer());
         if (item == null) {
             return;
         }
