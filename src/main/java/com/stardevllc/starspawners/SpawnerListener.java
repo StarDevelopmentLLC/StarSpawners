@@ -1,6 +1,8 @@
 package com.stardevllc.starspawners;
 
+import com.stardevllc.starcore.utils.ToolSet;
 import de.tr7zw.nbtapi.NBT;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.enchantments.Enchantment;
@@ -23,6 +25,10 @@ public class SpawnerListener implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
+        if (e.getPlayer().getGameMode() != GameMode.SURVIVAL) {
+            return;
+        }
+        
         Player player = e.getPlayer();
         if (!e.getBlock().getType().equals(Material.SPAWNER)) {
             return;
@@ -36,9 +42,31 @@ public class SpawnerListener implements Listener {
         if (!item.containsEnchantment(Enchantment.SILK_TOUCH)) {
             return;
         }
+        
+        ToolSet minToolSet;
+        try {
+            minToolSet = ToolSet.valueOf(plugin.getMainConfig().getString("spawner.mintoolmaterial"));
+        } catch (Exception ex) {
+            plugin.getLogger().severe("Invalid material name for the spawner.mintoolmaterial config option");
+            return;
+        }
+        
+        boolean toolMatches = false;
+        
+        for (int i = minToolSet.ordinal(); i < ToolSet.values().length; i++) {
+            if (item.getType() == ToolSet.values()[i].getPickaxe().parseMaterial()) {
+                toolMatches = true;
+                break;
+            }
+        }
+        
+        if (!toolMatches) {
+            return;
+        }
 
         CreatureSpawner creatureSpawner = (CreatureSpawner) e.getBlock().getState();
         plugin.getSpawnerManager().breakSpawner(player, creatureSpawner);
+        e.setExpToDrop(0);
     }
 
     @EventHandler
