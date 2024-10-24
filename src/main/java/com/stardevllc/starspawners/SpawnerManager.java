@@ -1,37 +1,98 @@
 package com.stardevllc.starspawners;
 
 import com.stardevllc.starcore.color.ColorHandler;
+import com.stardevllc.starcore.utils.EntityNames;
 import de.tr7zw.nbtapi.NBT;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class SpawnerManager {
+import java.util.Random;
+
+public class SpawnerManager implements Listener {
     private StarSpawners plugin;
 
     public SpawnerManager(StarSpawners plugin) {
         this.plugin = plugin;
     }
-
-    public void giveSpawner(Player player, int amount, String spawnerName){
-        ItemStack spawner = new ItemStack(Material.SPAWNER,amount);
-        NBT.modify(spawner, nbt -> {
-            nbt.setString("spawnerType", spawnerName);
-        });
-        ItemMeta spawnerMeta = spawner.getItemMeta();
-        spawnerMeta.setDisplayName(ColorHandler.getInstance().color("&d" + spawnerName + " Spawner"));
-        spawner.setItemMeta(spawnerMeta);
-        player.getInventory().addItem(spawner);
+    
+    public void breakSpawner(Player player, CreatureSpawner spawner) {
+        String pickupMode = plugin.getMainConfig().getString("spawner.pickupmode");
+        if (pickupMode.equalsIgnoreCase("drop")) {
+            dropSpawnerItem(spawner);
+        } else if (pickupMode.equalsIgnoreCase("inventory")) {
+            giveSpawnerItem(player, spawner);
+        }
     }
+    
+    public void dropSpawnerItem(CreatureSpawner spawner) {
+        EntityType entityType = spawner.getSpawnedType();
+        long id = NBT.getPersistentData(spawner, nbt -> nbt.getLong("spawnerId"));
+        spawner.getWorld().dropItem(spawner.getLocation(), createSpawnerItemStack(entityType, id));
+    }
+    
+    public void giveSpawnerItem(Player player, CreatureSpawner spawner) {
+        EntityType entityType = spawner.getSpawnedType();
+        long id = NBT.getPersistentData(player, nbt -> nbt.getLong("spawnerId"));
+        player.getInventory().addItem(createSpawnerItemStack(entityType, id));
+    }
+    
+    public ItemStack createSpawnerItemStack(EntityType entityType, long id) {
+        ItemStack spawnerItem = new ItemStack(Material.SPAWNER);
+        ItemMeta spawnerMeta = spawnerItem.getItemMeta();
+        spawnerMeta.setDisplayName(ColorHandler.getInstance().color(plugin.getMainConfig().getString("spawner.name").replace("{ENTITYNAME}", EntityNames.getDefaultName(entityType))));
+        spawnerItem.setItemMeta(spawnerMeta);
+        if (id == 0 && plugin.getMainConfig().getBoolean("spawner.unique")) {
+            id = new Random().nextLong();
+        }
 
-    public void setSpawnerType(CreatureSpawner creatureSpawner, EntityType entityType) {
+        long finalId = id;
+        NBT.modify(spawnerItem, nbt -> {
+            nbt.setLong("spawnerId", finalId);
+            nbt.setString("spawnerType", entityType.name());
+        });
+        return spawnerItem;
+    }
+    
+    public void placeSpawner(Player player, ItemStack handItem, CreatureSpawner spawner) {
+        String rawType = NBT.get(handItem, nbt -> {
+            return nbt.getString("spawnerType");
+        });
+        
+        EntityType entityType;
+        
+        if (rawType == null || rawType.isEmpty()) {
+            entityType = null;
+        } else {
+            entityType = EntityType.valueOf(rawType.toUpperCase());
+        }
+        
+        long spawnerId = NBT.get(handItem, nbt -> {
+            return nbt.getLong("spawnerId");
+        });
+        
+        Bukkit.getScheduler().runTaskLater(plugin, () -> NBT.modifyPersistentData(spawner, nbt -> {
+            nbt.setLong("spawnerId", spawnerId);
+            spawner.setSpawnedType(entityType);
+            spawner.update();
+        }), 1L);
+    }
+    
+    public void setSpawnerType(CreatureSpawner spawner, EntityType entityType, long spawnerId) {
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            creatureSpawner.setSpawnedType(entityType);
-            creatureSpawner.update();
+            spawner.setSpawnedType(entityType);
+            spawner.update();
+            if (spawnerId > 0) {
+                NBT.modifyPersistentData(spawner, nbt -> {
+                    nbt.setLong("spawnerId", spawnerId);
+                });
+            }
         }, 1L);
+        
     }
 }

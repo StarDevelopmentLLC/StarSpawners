@@ -38,7 +38,7 @@ public class SpawnerListener implements Listener {
         }
 
         CreatureSpawner creatureSpawner = (CreatureSpawner) e.getBlock().getState();
-        plugin.getSpawnerManager().giveSpawner(player, 1, creatureSpawner.getSpawnedType().name());
+        plugin.getSpawnerManager().breakSpawner(player, creatureSpawner);
     }
 
     @EventHandler
