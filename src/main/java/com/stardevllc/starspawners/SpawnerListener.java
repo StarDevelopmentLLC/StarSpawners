@@ -12,6 +12,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.logging.Level;
+
 public class SpawnerListener implements Listener {
     private StarSpawners plugin;
 
@@ -46,14 +48,19 @@ public class SpawnerListener implements Listener {
             return;
         }
 
-        EntityType entityType = EntityType.valueOf(NBT.get(item, nbt -> {
-            return nbt.getString("spawnerType");
-        }));
-        
         if (!(e.getBlockPlaced().getType().equals(Material.SPAWNER))) {
             return;
         }
-        CreatureSpawner creatureSpawner = (CreatureSpawner) e.getBlockPlaced().getState();
-        plugin.getSpawnerManager().setSpawnerType(creatureSpawner, entityType);
+
+        try {
+            EntityType entityType = EntityType.valueOf(NBT.get(item, nbt -> {
+                return nbt.getString("spawnerType");
+            }));
+
+            CreatureSpawner creatureSpawner = (CreatureSpawner) e.getBlockPlaced().getState();
+            plugin.getSpawnerManager().setSpawnerType(creatureSpawner, entityType, 0);
+        } catch (Exception exception) {
+            plugin.getLogger().log(Level.SEVERE, "Could not set the spawner type", exception);
+        }
     }
 }
