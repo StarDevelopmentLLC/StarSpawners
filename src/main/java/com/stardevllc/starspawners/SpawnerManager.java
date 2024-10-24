@@ -43,6 +43,10 @@ public class SpawnerManager implements Listener {
     }
     
     public ItemStack createSpawnerItemStack(EntityType entityType, long id) {
+        if (entityType == null) {
+            return null;
+        }
+        
         ItemStack spawnerItem = new ItemStack(Material.SPAWNER);
         ItemMeta spawnerMeta = spawnerItem.getItemMeta();
         spawnerMeta.setDisplayName(ColorHandler.getInstance().color(plugin.getMainConfig().getString("spawner.name").replace("{ENTITYNAME}", EntityNames.getDefaultName(entityType))));
