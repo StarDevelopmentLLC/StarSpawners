@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
-    id 'maven-publish'  
+    id 'maven-publish'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 repositories {
@@ -15,6 +16,9 @@ repositories {
     maven {
         url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
     }
+    maven {
+        url = 'https://repo.codemc.org/repository/maven-public/'
+    }
 }
 
 publishing {
@@ -26,7 +30,7 @@ publishing {
 }
 
 group 'com.github.StarDevelopmentLLC'
-version '1.0.0-alpha.1'
+version '0.1.0'
 
 processResources {
     filesMatching("*.yml") {
@@ -38,10 +42,20 @@ jar {
     //destinationDirectory = file(System.getProperty("user.home") + File.separator + "Documents" + File.separator + "JarOutput")
 }
 
+shadowJar {
+    archiveClassifier.set('')
+    //destinationDirectory = file(System.getProperty("user.home") + File.separator + "Documents" + File.separator + "JarOutput")
+}
+
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.21.1-R0.1-SNAPSHOT'
     compileOnly 'com.github.StarDevelopmentLLC:StarCore:1.0.0-alpha.45'
     compileOnly 'me.clip:placeholderapi:2.11.6'
+    compileOnly 'de.tr7zw:item-nbt-api-plugin:2.14.0'
+    implementation project(':base')
+    implementation project(':v1_8')
+    implementation project(':v1_13')
+    implementation project(':v1_21')
 }
 
 java {
@@ -51,4 +65,6 @@ java {
 }
 
 tasks.compileJava.dependsOn(clean)
+tasks.jar.finalizedBy(shadowJar)
+tasks.publishToMavenLocal.dependsOn(shadowJar)
 tasks.build.finalizedBy(publishToMavenLocal)

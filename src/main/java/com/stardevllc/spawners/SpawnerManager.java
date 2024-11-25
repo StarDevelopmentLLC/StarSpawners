@@ -1,4 +1,4 @@
-package com.stardevllc.starspawners;
+package com.stardevllc.spawners;
 
 import com.stardevllc.starcore.color.ColorHandler;
 import com.stardevllc.starcore.utils.EntityNames;
