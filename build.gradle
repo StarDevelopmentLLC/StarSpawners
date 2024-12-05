@@ -48,8 +48,8 @@ shadowJar {
 }
 
 dependencies {
-    compileOnly 'org.spigotmc:spigot-api:1.21.1-R0.1-SNAPSHOT'
-    compileOnly 'com.github.StarDevelopmentLLC:StarCore:1.0.0-alpha.45'
+    compileOnly 'org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT'
+    compileOnly 'com.github.StarDevelopmentLLC:StarCore:0.1.6'
     compileOnly 'me.clip:placeholderapi:2.11.6'
     compileOnly 'de.tr7zw:item-nbt-api-plugin:2.14.0'
     implementation project(':base')
