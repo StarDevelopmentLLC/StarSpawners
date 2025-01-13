@@ -1,6 +1,6 @@
 package com.stardevllc.spawners;
 
-import com.stardevllc.starcore.color.ColorHandler;
+import com.stardevllc.colors.StarColors;
 import com.stardevllc.starcore.utils.EntityNames;
 import de.tr7zw.nbtapi.NBT;
 import org.bukkit.Bukkit;
@@ -49,7 +49,7 @@ public class SpawnerManager implements Listener {
         
         ItemStack spawnerItem = new ItemStack(Material.SPAWNER);
         ItemMeta spawnerMeta = spawnerItem.getItemMeta();
-        spawnerMeta.setDisplayName(ColorHandler.getInstance().color(plugin.getMainConfig().getString("spawner.name").replace("{ENTITYNAME}", EntityNames.getDefaultName(entityType))));
+        spawnerMeta.setDisplayName(StarColors.color(plugin.getMainConfig().getString("spawner.name").replace("{ENTITYNAME}", EntityNames.getDefaultName(entityType))));
         spawnerItem.setItemMeta(spawnerMeta);
         if (id == 0 && plugin.getMainConfig().getBoolean("spawner.unique")) {
             id = new Random().nextLong();
