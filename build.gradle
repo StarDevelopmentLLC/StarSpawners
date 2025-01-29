@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'com.gradleup.shadow' version '9.0.0-beta2'
 }
 
 repositories {
@@ -30,7 +30,7 @@ publishing {
 }
 
 group 'com.github.StarDevelopmentLLC'
-version '0.1.1'
+version '0.1.2'
 
 processResources {
     filesMatching("*.yml") {
@@ -44,15 +44,17 @@ jar {
 
 shadowJar {
     archiveClassifier.set('')
+    relocate('com.stardevllc.mcwrappers', 'com.stardevllc.spawners.mcwrappers')
     //destinationDirectory = file(System.getProperty("user.home") + File.separator + "Documents" + File.separator + "JarOutput")
 }
 
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT'
-    compileOnly 'com.github.StarDevelopmentLLC:StarCore:0.1.9'
+    compileOnly 'com.github.StarDevelopmentLLC:StarCore:0.1.10'
     compileOnly 'me.clip:placeholderapi:2.11.6'
     compileOnly 'de.tr7zw:item-nbt-api-plugin:2.14.0'
     compileOnly 'com.github.StarDevelopmentLLC:colors:0.1.4'
+    implementation 'com.github.StarDevelopmentLLC:mcwrappers:0.1.0'
     implementation project(':base')
     implementation project(':v1_8')
     implementation project(':v1_13')
