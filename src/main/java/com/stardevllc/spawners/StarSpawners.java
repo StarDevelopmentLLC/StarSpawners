@@ -1,24 +1,20 @@
 package com.stardevllc.spawners;
 
-import com.stardevllc.starcore.StarCore;
-import com.stardevllc.starcore.config.Config;
-import com.stardevllc.starcore.wrapper.PlayerHandWrapper;
-import org.bukkit.Bukkit;
+import com.stardevllc.mcwrappers.MCWrappers;
+import com.stardevllc.mcwrappers.base.PlayerHandWrapper;
+import com.stardevllc.starcore.config.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
 public class StarSpawners extends JavaPlugin {
     
-    private StarCore starCore;
-    
-    private Config mainConfig;
+    private Configuration mainConfig;
     private SpawnerManager spawnerManager;
 
     @Override
     public void onEnable() {
-        this.starCore = (StarCore) Bukkit.getServer().getPluginManager().getPlugin("StarCore");
-        this.mainConfig = new Config(new File(getDataFolder(), "config.yml"));
+        this.mainConfig = new Configuration(new File(getDataFolder(), "config.yml"));
         this.mainConfig.addDefault("spawner.name", "&d{ENTITYNAME} Spawner", " The name for the spawner item", " The only applies to spawners that are picked up via silk touch", "You don't need the entity name in the display name. The plugin tracks the items using NBT Tags");
 //        this.mainConfig.addDefault("spawner.unique", false, "This setting makes it so that all spawners that are created are unique", "This makes them unstackable and makes sure that they cannot be duped");
         
@@ -35,10 +31,10 @@ public class StarSpawners extends JavaPlugin {
     }
 
     public PlayerHandWrapper getPlayerHandWrapper() {
-        return starCore.getPlayerHandWrapper();
+        return MCWrappers.PLAYER_HAND_WRAPPER;
     }
 
-    public Config getMainConfig() {
+    public Configuration getMainConfig() {
         return mainConfig;
     }
 }
