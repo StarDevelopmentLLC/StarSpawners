@@ -1,7 +1,7 @@
 package com.stardevllc.spawners;
 
-import com.stardevllc.mcwrappers.MCWrappers;
-import com.stardevllc.mcwrappers.base.PlayerHandWrapper;
+import com.stardevllc.starcore.base.wrappers.MCWrappers;
+import com.stardevllc.starcore.base.wrappers.PlayerHandWrapper;
 import com.stardevllc.starcore.config.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,7 +31,7 @@ public class StarSpawners extends JavaPlugin {
     }
 
     public PlayerHandWrapper getPlayerHandWrapper() {
-        return MCWrappers.PLAYER_HAND_WRAPPER;
+        return getServer().getServicesManager().getRegistration(MCWrappers.class).getProvider().getPlayerHandWrapper();
     }
 
     public Configuration getMainConfig() {

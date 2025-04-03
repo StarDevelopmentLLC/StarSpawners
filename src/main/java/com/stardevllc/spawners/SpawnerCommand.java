@@ -1,6 +1,6 @@
 package com.stardevllc.spawners;
 
-import com.stardevllc.colors.StarColors;
+import com.stardevllc.starcore.StarColors;
 import com.stardevllc.starcore.utils.EntityNames;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
