@@ -30,7 +30,7 @@ publishing {
 }
 
 group 'com.github.StarDevelopmentLLC'
-version '0.1.3'
+version '0.1.4'
 
 processResources {
     filesMatching("*.yml") {
@@ -44,15 +44,14 @@ jar {
 
 shadowJar {
     archiveClassifier.set('')
-    relocate('com.stardevllc.mcwrappers', 'com.stardevllc.spawners.mcwrappers')
     //destinationDirectory = file(System.getProperty("user.home") + File.separator + "Documents" + File.separator + "JarOutput")
 }
 
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT'
-    compileOnly 'com.github.StarDevelopmentLLC:StarCore:0.2.2'
+    compileOnly 'com.github.StarDevelopmentLLC:StarCore:0.2.3'
     compileOnly 'me.clip:placeholderapi:2.11.6'
-    compileOnly 'de.tr7zw:item-nbt-api-plugin:2.14.1'
+    compileOnly 'de.tr7zw:item-nbt-api-plugin:2.15.0'
     implementation project(':base')
     implementation project(':v1_8')
     implementation project(':v1_13')
