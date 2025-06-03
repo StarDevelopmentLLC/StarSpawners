@@ -1,7 +1,7 @@
 package com.stardevllc.spawners;
 
-import com.stardevllc.starcore.base.wrappers.MCWrappers;
-import com.stardevllc.starcore.base.wrappers.PlayerHandWrapper;
+import com.stardevllc.starcore.api.wrappers.MCWrappers;
+import com.stardevllc.starcore.api.wrappers.PlayerHandWrapper;
 import com.stardevllc.starcore.config.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 

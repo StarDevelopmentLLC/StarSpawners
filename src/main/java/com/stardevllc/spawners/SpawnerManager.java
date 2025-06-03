@@ -1,6 +1,6 @@
 package com.stardevllc.spawners;
 
-import com.stardevllc.starcore.StarColors;
+import com.stardevllc.starcore.api.StarColors;
 import com.stardevllc.starcore.utils.EntityNames;
 import de.tr7zw.nbtapi.NBT;
 import org.bukkit.Bukkit;
