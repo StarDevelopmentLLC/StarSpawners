@@ -32,7 +32,7 @@ publishing {
 }
 
 group 'com.github.StarDevelopmentLLC'
-version '0.1.6'
+version '0.2.0'
 
 processResources {
     filesMatching("*.yml") {
@@ -46,9 +46,12 @@ tasks.named('shadowJar', ShadowJar) {
 
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT'
-    compileOnly 'com.github.StarDevelopmentLLC:StarCore:0.5.4'
+    compileOnly 'com.github.StarDevelopmentLLC:StarLib:0.9.1'
+    compileOnly 'com.github.StarDevelopmentLLC:StarMCLib:0.1.2'
+    compileOnly 'com.github.StarDevelopmentLLC:StarCoreAPI:0.3.1'
+    compileOnly 'com.github.StarDevelopmentLLC:StarCore:0.7.1'
     compileOnly 'me.clip:placeholderapi:2.11.6'
-    compileOnly 'de.tr7zw:item-nbt-api-plugin:2.15.0'
+    compileOnly 'de.tr7zw:item-nbt-api-plugin:2.15.1'
     implementation project(':base')
     implementation project(':v1_8')
     implementation project(':v1_13')

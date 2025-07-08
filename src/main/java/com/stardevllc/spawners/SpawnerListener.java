@@ -1,6 +1,6 @@
 package com.stardevllc.spawners;
 
-import com.stardevllc.starcore.utils.ToolSet;
+import com.stardevllc.starmclib.ToolSet;
 import de.tr7zw.nbtapi.NBT;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
