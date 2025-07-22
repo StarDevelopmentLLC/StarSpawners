@@ -1,7 +1,7 @@
 package com.stardevllc.spawners;
 
 import com.stardevllc.starcore.api.StarColors;
-import com.stardevllc.starmclib.EntityNames;
+import com.stardevllc.starmclib.names.EntityNames;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
@@ -117,7 +117,7 @@ public class SpawnerCommand implements CommandExecutor {
             }
             
             Block block = player.getTargetBlock(null, 4);
-            if (!block.getType().equals(Material.SPAWNER)) {
+            if (block.getType() != Material.SPAWNER) {
                 player.sendMessage(StarColors.color("&cThe block you are looking at is not a spawner."));
                 return true;
             }

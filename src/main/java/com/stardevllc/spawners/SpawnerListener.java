@@ -1,6 +1,6 @@
 package com.stardevllc.spawners;
 
-import com.stardevllc.starmclib.ToolSet;
+import com.stardevllc.starmclib.materialset.ToolSet;
 import de.tr7zw.nbtapi.NBT;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -30,7 +30,7 @@ public class SpawnerListener implements Listener {
         }
         
         Player player = e.getPlayer();
-        if (!e.getBlock().getType().equals(Material.SPAWNER)) {
+        if (e.getBlock().getType() != Material.SPAWNER) {
             return;
         }
 
@@ -72,11 +72,8 @@ public class SpawnerListener implements Listener {
     @EventHandler
     public void onPlaceEvent(BlockPlaceEvent e) {
         ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
-        if (item == null) {
-            return;
-        }
-
-        if (!(e.getBlockPlaced().getType().equals(Material.SPAWNER))) {
+        
+        if (e.getBlockPlaced().getType() != Material.SPAWNER) {
             return;
         }
 

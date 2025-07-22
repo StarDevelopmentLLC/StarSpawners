@@ -12,6 +12,11 @@ repositories {
     maven {
         url = 'https://www.jitpack.io'
     }
+    
+    maven {
+        url = 'https://repo.stardevllc.com/releases'
+    }
+    
     maven {
         url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
     }
@@ -46,9 +51,9 @@ tasks.named('shadowJar', ShadowJar) {
 
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT'
-    compileOnly 'com.github.StarDevelopmentLLC:StarLib:0.10.1'
-    compileOnly 'com.github.StarDevelopmentLLC:StarMCLib:0.2.0'
-    compileOnly 'com.github.StarDevelopmentLLC:StarCore:0.8.0'
+    compileOnly 'com.stardevllc:StarLib:0.11.0'
+    compileOnly 'com.stardevllc:StarMCLib:0.2.0'
+    compileOnly 'com.stardevllc:StarCore:0.8.5'
     compileOnly 'me.clip:placeholderapi:2.11.6'
     compileOnly 'de.tr7zw:item-nbt-api-plugin:2.15.1'
     implementation project(':base')
