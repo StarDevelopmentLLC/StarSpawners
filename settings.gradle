@@ -3,4 +3,3 @@ plugins {
 }
 
 rootProject.name = 'StarSpawners'
-include('base', 'v1_8', 'v1_13', 'v1_21')

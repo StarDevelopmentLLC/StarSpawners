@@ -1,5 +1,6 @@
 package com.stardevllc.spawners;
 
+import com.stardevllc.starlib.dependency.Inject;
 import com.stardevllc.starmclib.materialset.ToolSet;
 import de.tr7zw.nbtapi.NBT;
 import org.bukkit.GameMode;
@@ -17,11 +18,8 @@ import org.bukkit.inventory.ItemStack;
 import java.util.logging.Level;
 
 public class SpawnerListener implements Listener {
+    @Inject
     private StarSpawners plugin;
-
-    public SpawnerListener(StarSpawners plugin) {
-        this.plugin = plugin;
-    }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
@@ -78,10 +76,15 @@ public class SpawnerListener implements Listener {
         }
 
         try {
-            EntityType entityType = EntityType.valueOf(NBT.get(item, nbt -> {
-                return nbt.getString("spawnerType");
-            }));
-
+            EntityType entityType;
+            try {
+                entityType = EntityType.valueOf(NBT.get(item, nbt -> {
+                    return nbt.getString("spawnerType");
+                }));
+            } catch (Throwable ex) {
+                entityType = EntityType.PIG;
+            }
+            
             CreatureSpawner creatureSpawner = (CreatureSpawner) e.getBlockPlaced().getState();
             plugin.getSpawnerManager().setSpawnerType(creatureSpawner, entityType, 0);
         } catch (Exception exception) {

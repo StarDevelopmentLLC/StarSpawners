@@ -1,6 +1,7 @@
 package com.stardevllc.spawners;
 
 import com.stardevllc.starcore.api.StarColors;
+import com.stardevllc.starlib.dependency.Inject;
 import com.stardevllc.starmclib.names.EntityNames;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -13,11 +14,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class SpawnerCommand implements CommandExecutor {
+    @Inject
     private StarSpawners plugin;
-
-    public SpawnerCommand(StarSpawners plugin) {
-        this.plugin = plugin;
-    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

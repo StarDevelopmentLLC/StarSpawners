@@ -1,6 +1,7 @@
 package com.stardevllc.spawners;
 
 import com.stardevllc.starcore.api.StarColors;
+import com.stardevllc.starlib.dependency.Inject;
 import com.stardevllc.starmclib.names.EntityNames;
 import de.tr7zw.nbtapi.NBT;
 import org.bukkit.Bukkit;
@@ -8,19 +9,15 @@ import org.bukkit.Material;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Random;
 
-public class SpawnerManager implements Listener {
+public class SpawnerManager {
+    @Inject
     private StarSpawners plugin;
 
-    public SpawnerManager(StarSpawners plugin) {
-        this.plugin = plugin;
-    }
-    
     public void breakSpawner(Player player, CreatureSpawner spawner) {
         String pickupMode = plugin.getMainConfig().getString("spawner.pickupmode");
         if (pickupMode.equalsIgnoreCase("drop")) {
@@ -68,14 +65,19 @@ public class SpawnerManager implements Listener {
             return nbt.getString("spawnerType");
         });
         
-        EntityType entityType;
+        EntityType parsedEntityType;
         
         if (rawType == null || rawType.isEmpty()) {
-            entityType = null;
+            parsedEntityType = EntityType.PIG;
         } else {
-            entityType = EntityType.valueOf(rawType.toUpperCase());
+            try {
+                parsedEntityType = EntityType.valueOf(rawType.toUpperCase());
+            } catch (Throwable e) {
+                parsedEntityType = EntityType.PIG;
+            }
         }
         
+        final EntityType entityType = parsedEntityType;
         long spawnerId = NBT.get(handItem, nbt -> {
             return nbt.getLong("spawnerId");
         });
@@ -97,6 +99,5 @@ public class SpawnerManager implements Listener {
                 });
             }
         }, 1L);
-        
     }
 }
