@@ -1,6 +1,6 @@
 package com.stardevllc.spawners;
 
-import com.electronwill.nightconfig.core.file.FileConfig;
+import com.stardevllc.nightconfig.core.file.FileConfig;
 import com.stardevllc.starcore.api.wrappers.MCWrappers;
 import com.stardevllc.starcore.api.wrappers.PlayerHandWrapper;
 import com.stardevllc.starcore.config.Configuration;
