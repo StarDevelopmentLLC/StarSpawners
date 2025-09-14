@@ -1,9 +1,9 @@
 package com.stardevllc.spawners;
 
-import com.stardevllc.nightconfig.core.file.FileConfig;
+import com.stardevllc.config.file.FileConfig;
+import com.stardevllc.config.file.yaml.YamlConfig;
 import com.stardevllc.starcore.api.wrappers.MCWrappers;
 import com.stardevllc.starcore.api.wrappers.PlayerHandWrapper;
-import com.stardevllc.starcore.config.Configuration;
 import com.stardevllc.starmclib.StarMCLib;
 import com.stardevllc.starmclib.plugin.ExtendedJavaPlugin;
 
@@ -11,7 +11,7 @@ import java.io.File;
 
 public class StarSpawners extends ExtendedJavaPlugin {
     
-    private Configuration mainConfig;
+    private FileConfig mainConfig;
     private SpawnerManager spawnerManager;
 
     @Override
@@ -19,7 +19,7 @@ public class StarSpawners extends ExtendedJavaPlugin {
         super.onEnable();
         StarMCLib.registerPluginInjector(this, getInjector());
         StarMCLib.registerPluginEventBus(getEventBus());
-        this.mainConfig = new Configuration(FileConfig.of(new File(getDataFolder(), "config.toml")));
+        this.mainConfig = new YamlConfig(new File(getDataFolder(), "config.yml"));
         this.mainConfig.addDefault("spawner.name", "&d{ENTITYNAME} Spawner", " The name for the spawner item", " The only applies to spawners that are picked up via silk touch", "You don't need the entity name in the display name. The plugin tracks the items using NBT Tags");
 //        this.mainConfig.addDefault("spawner.unique", false, "This setting makes it so that all spawners that are created are unique", "This makes them unstackable and makes sure that they cannot be duped");
         
@@ -43,7 +43,7 @@ public class StarSpawners extends ExtendedJavaPlugin {
         return getServer().getServicesManager().getRegistration(MCWrappers.class).getProvider().getPlayerHandWrapper();
     }
 
-    public Configuration getMainConfig() {
+    public FileConfig getMainConfig() {
         return mainConfig;
     }
 }
