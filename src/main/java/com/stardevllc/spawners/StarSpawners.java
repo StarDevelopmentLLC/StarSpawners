@@ -2,8 +2,8 @@ package com.stardevllc.spawners;
 
 import com.stardevllc.config.file.FileConfig;
 import com.stardevllc.config.file.yaml.YamlConfig;
-import com.stardevllc.starcore.api.wrappers.MCWrappers;
-import com.stardevllc.starcore.api.wrappers.PlayerHandWrapper;
+import com.stardevllc.smcversion.MCWrappers;
+import com.stardevllc.smcversion.wrappers.PlayerHandWrapper;
 import com.stardevllc.starmclib.StarMCLib;
 import com.stardevllc.starmclib.plugin.ExtendedJavaPlugin;
 
