@@ -1,6 +1,7 @@
 package com.stardevllc.spawners;
 
 import com.stardevllc.smaterial.ToolSet;
+import com.stardevllc.smcversion.MCWrappers;
 import com.stardevllc.starlib.dependency.Inject;
 import de.tr7zw.nbtapi.NBT;
 import org.bukkit.GameMode;
@@ -32,7 +33,7 @@ public class SpawnerListener implements Listener {
             return;
         }
 
-        ItemStack item = plugin.getPlayerHandWrapper().getItemInMainHand(e.getPlayer());
+        ItemStack item = MCWrappers.getPlayerHandWrapper().getItemInMainHand(e.getPlayer());
         if (item == null) {
             return;
         }

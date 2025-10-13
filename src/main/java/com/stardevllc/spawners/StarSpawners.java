@@ -2,8 +2,6 @@ package com.stardevllc.spawners;
 
 import com.stardevllc.config.file.FileConfig;
 import com.stardevllc.config.file.yaml.YamlConfig;
-import com.stardevllc.smcversion.MCWrappers;
-import com.stardevllc.smcversion.wrappers.PlayerHandWrapper;
 import com.stardevllc.starmclib.StarMCLib;
 import com.stardevllc.starmclib.plugin.ExtendedJavaPlugin;
 
@@ -37,10 +35,6 @@ public class StarSpawners extends ExtendedJavaPlugin {
 
     public SpawnerManager getSpawnerManager() {
         return spawnerManager;
-    }
-
-    public PlayerHandWrapper getPlayerHandWrapper() {
-        return getServer().getServicesManager().getRegistration(MCWrappers.class).getProvider().getPlayerHandWrapper();
     }
 
     public FileConfig getMainConfig() {
