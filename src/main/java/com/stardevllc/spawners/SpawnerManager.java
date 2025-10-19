@@ -1,6 +1,5 @@
 package com.stardevllc.spawners;
 
-import com.stardevllc.starcore.api.StarColors;
 import com.stardevllc.starlib.injector.Inject;
 import com.stardevllc.starmclib.names.EntityNames;
 import de.tr7zw.nbtapi.NBT;
@@ -46,7 +45,7 @@ public class SpawnerManager {
         
         ItemStack spawnerItem = new ItemStack(Material.SPAWNER);
         ItemMeta spawnerMeta = spawnerItem.getItemMeta();
-        spawnerMeta.setDisplayName(StarColors.color(plugin.getMainConfig().getString("spawner.name").replace("{ENTITYNAME}", EntityNames.getDefaultName(entityType))));
+        spawnerMeta.setDisplayName(plugin.getColors().colorLegacy(plugin.getMainConfig().getString("spawner.name").replace("{ENTITYNAME}", EntityNames.getDefaultName(entityType))));
         spawnerItem.setItemMeta(spawnerMeta);
         if (id == 0 && plugin.getMainConfig().getBoolean("spawner.unique")) {
             id = new Random().nextLong();

@@ -1,14 +1,12 @@
 package com.stardevllc.spawners;
 
-import com.stardevllc.starcore.api.StarColors;
 import com.stardevllc.starlib.injector.Inject;
+import com.stardevllc.starmclib.StarColorsV2;
 import com.stardevllc.starmclib.names.EntityNames;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import org.bukkit.command.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -19,29 +17,30 @@ public class SpawnerCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        StarColorsV2 colors = plugin.getColors();
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(StarColors.color("&cOnly players can use that command"));
+            sender.sendMessage(colors.colorLegacy("&cOnly players can use that command"));
             return true;
         }
 
         if (!(args.length > 0)) {
-            sender.sendMessage(StarColors.color("&cYou must provide a sub command."));
+            sender.sendMessage(colors.colorLegacy("&cYou must provide a sub command."));
             return true;
         }
 
         if (!player.hasPermission("starspawners.admin")) {
-            player.sendMessage(StarColors.color("&cYou do not have permission to use that command."));
+            player.sendMessage(colors.colorLegacy("&cYou do not have permission to use that command."));
             return true;
         }
 
         if (args[0].equalsIgnoreCase("give")) {
             if (!player.hasPermission("starspawners.admin.give")) {
-                StarColors.coloredMessage(sender, "&cYou do not have permission to use that command.");
+                colors.coloredLegacy(sender, "&cYou do not have permission to use that command.");
                 return true;
             }
             
             if (!(args.length >= 2)) {
-                player.sendMessage(StarColors.color("&c/" + label + " give <entityType> [player] [amount]"));
+                player.sendMessage(colors.colorLegacy("&c/" + label + " give <entityType> [player] [amount]"));
                 return true;
             }
             
@@ -50,17 +49,17 @@ public class SpawnerCommand implements CommandExecutor {
             try {
                 entityType = EntityType.valueOf(args[1].toUpperCase());
             } catch (Exception e) {
-                player.sendMessage(StarColors.color("&cInvalid entity type: " + args[1]));
+                player.sendMessage(colors.colorLegacy("&cInvalid entity type: " + args[1]));
                 return true;
             }
             
             if (!entityType.isSpawnable()) {
-                player.sendMessage(StarColors.color("&cThat entity is not spawnable by mob spawners."));
+                player.sendMessage(colors.colorLegacy("&cThat entity is not spawnable by mob spawners."));
                 return true;
             }
             
             if (!player.hasPermission("starspawners.admin.give." + entityType.name().toLowerCase())) {
-                StarColors.coloredMessage(sender, "&cYou do not have permission to give " + EntityNames.getDefaultName(entityType).toLowerCase() + " spawners.");
+                colors.coloredLegacy(sender, "&cYou do not have permission to give " + EntityNames.getDefaultName(entityType).toLowerCase() + " spawners.");
                 return true;
             }
             
@@ -79,7 +78,7 @@ public class SpawnerCommand implements CommandExecutor {
             
             if (!target.getUniqueId().equals(player.getUniqueId())) {
                 if (!player.hasPermission("starspawners.admin.give.others")) {
-                    StarColors.coloredMessage(sender, "&cYou do not have permission to give spawners to other players.");
+                    colors.coloredLegacy(sender, "&cYou do not have permission to give spawners to other players.");
                     return true;
                 }
             }
@@ -102,21 +101,21 @@ public class SpawnerCommand implements CommandExecutor {
             ItemStack spawnerItemStack = plugin.getSpawnerManager().createSpawnerItemStack(entityType, 0);
             spawnerItemStack.setAmount(amount);
             target.getInventory().addItem(spawnerItemStack);
-            StarColors.coloredMessage(target, "&aYou have been given a(n) " + EntityNames.getDefaultName(entityType) + " spawner.");
+            colors.coloredLegacy(target, "&aYou have been given a(n) " + EntityNames.getDefaultName(entityType) + " spawner.");
         } else if (args[0].equalsIgnoreCase("set")) {
             if (!player.hasPermission("starspawners.admin.set")) {
-                StarColors.coloredMessage(sender, "&cYou do not have permission to use that command.");
+                colors.coloredLegacy(sender, "&cYou do not have permission to use that command.");
                 return true;
             }
             
             if (args.length != 2) {
-                player.sendMessage(StarColors.color("/" + label + " set <entityType>"));
+                player.sendMessage(colors.colorLegacy("/" + label + " set <entityType>"));
                 return true;
             }
             
             Block block = player.getTargetBlock(null, 4);
             if (block.getType() != Material.SPAWNER) {
-                player.sendMessage(StarColors.color("&cThe block you are looking at is not a spawner."));
+                player.sendMessage(colors.colorLegacy("&cThe block you are looking at is not a spawner."));
                 return true;
             }
 
@@ -125,17 +124,17 @@ public class SpawnerCommand implements CommandExecutor {
             try {
                 entityType = EntityType.valueOf(args[1].toUpperCase());
             } catch (IllegalArgumentException e) {
-                player.sendMessage(StarColors.color("&cInvalid entity type: " + args[1]));
+                player.sendMessage(colors.colorLegacy("&cInvalid entity type: " + args[1]));
                 return true;
             }
 
             if (!entityType.isSpawnable()) {
-                player.sendMessage(StarColors.color("&cThat entity is not spawnable by mob spawners."));
+                player.sendMessage(colors.colorLegacy("&cThat entity is not spawnable by mob spawners."));
                 return true;
             }
 
             if (!player.hasPermission("starspawners.admin.give." + entityType.name().toLowerCase())) {
-                StarColors.coloredMessage(sender, "&cYou do not have permission to set " + EntityNames.getDefaultName(entityType).toLowerCase() + " spawners.");
+                colors.coloredLegacy(sender, "&cYou do not have permission to set " + EntityNames.getDefaultName(entityType).toLowerCase() + " spawners.");
                 return true;
             }
 
@@ -143,7 +142,7 @@ public class SpawnerCommand implements CommandExecutor {
             try {
                 plugin.getSpawnerManager().setSpawnerType(creatureSpawner, entityType, 0);
             } catch (Exception e) {
-                player.sendMessage(StarColors.color("&cCould not set " + entityType.name() + " to that spawner"));
+                player.sendMessage(colors.colorLegacy("&cCould not set " + entityType.name() + " to that spawner"));
             }
         }
         return true;

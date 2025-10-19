@@ -45,7 +45,7 @@ publishing {
 }
 
 group = 'com.stardevllc'
-version = '0.3.4'
+version = '0.3.5'
 
 processResources {
     filesMatching("*.yml") {
@@ -55,9 +55,10 @@ processResources {
 
 dependencies {
     compileOnly "org.spigotmc:spigot-api:${spigotVersion}"
-    compileOnly "com.stardevllc:StarCore:${starcoreVersion}"
+//    compileOnly "com.stardevllc:StarCore:${starcoreVersion}"
     compileOnly "me.clip:placeholderapi:${papiVersion}"
     compileOnly "de.tr7zw:item-nbt-api-plugin:${nbtapiVersion}"
+    compileOnly "com.stardevllc:StarMCLib:0.8.2"
 }
 
 java {
