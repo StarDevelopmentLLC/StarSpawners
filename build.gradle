@@ -54,10 +54,10 @@ processResources {
 }
 
 dependencies {
-    compileOnly 'org.spigotmc:spigot-api:1.21.10-R0.1-SNAPSHOT'
-    compileOnly 'com.stardevllc:StarCore:0.12.1'
-    compileOnly 'me.clip:placeholderapi:2.11.6'
-    compileOnly 'de.tr7zw:item-nbt-api-plugin:2.15.1'
+    compileOnly "org.spigotmc:spigot-api:${spigotVersion}"
+    compileOnly "com.stardevllc:StarCore:${starcoreVersion}"
+    compileOnly "me.clip:placeholderapi:${papiVersion}"
+    compileOnly "de.tr7zw:item-nbt-api-plugin:${nbtapiVersion}"
 }
 
 java {
