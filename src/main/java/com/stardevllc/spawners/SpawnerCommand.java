@@ -1,7 +1,7 @@
 package com.stardevllc.spawners;
 
 import com.stardevllc.starcore.api.StarColors;
-import com.stardevllc.starlib.dependency.Inject;
+import com.stardevllc.starlib.injector.Inject;
 import com.stardevllc.starmclib.names.EntityNames;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

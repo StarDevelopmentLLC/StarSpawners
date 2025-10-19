@@ -2,7 +2,7 @@ package com.stardevllc.spawners;
 
 import com.stardevllc.smaterial.ToolSet;
 import com.stardevllc.smcversion.MCWrappers;
-import com.stardevllc.starlib.dependency.Inject;
+import com.stardevllc.starlib.injector.Inject;
 import de.tr7zw.nbtapi.NBT;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
