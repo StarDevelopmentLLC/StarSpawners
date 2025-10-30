@@ -1,6 +1,9 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     id 'java-library'
     id 'maven-publish'
+    id 'com.gradleup.shadow' version '9.2.2'
 }
 
 repositories {
@@ -25,6 +28,9 @@ repositories {
     }
 }
 
+group = 'com.stardevllc'
+version = '0.3.4'
+
 publishing {
     repositories {
         maven {
@@ -39,13 +45,18 @@ publishing {
     
     publications {
         maven(MavenPublication) {
-            from components.java
+            from components.shadow
+
+            artifact ("build/libs/${project.name}-${project.version}-javadoc.jar") {
+                classifier = "javadoc"
+            }
+
+            artifact ("build/libs/${project.name}-${project.version}-sources.jar") {
+                classifier = "sources"
+            }
         }
     }
 }
-
-group = 'com.stardevllc'
-version = '0.3.4'
 
 processResources {
     filesMatching("*.yml") {
@@ -53,11 +64,16 @@ processResources {
     }
 }
 
+tasks.named('shadowJar', ShadowJar) {
+    archiveClassifier = ''
+}
+
 dependencies {
     compileOnly "org.spigotmc:spigot-api:${spigotVersion}"
     compileOnly "me.clip:placeholderapi:${papiVersion}"
     compileOnly "de.tr7zw:item-nbt-api-plugin:${nbtapiVersion}"
     compileOnly "com.stardevllc:StarMCLib:${starmclibVersion}"
+    implementation project(':common')
 }
 
 java {
@@ -69,6 +85,43 @@ java {
     withSourcesJar()
 }
 
+tasks.named("javadoc", Javadoc) {
+    subprojects { subproject ->
+        source += subproject.sourceSets.main.allJava
+    }
+//    source += project.sourceSets.main.allJava
+
+    subprojects { subproject ->
+        classpath += subproject.sourceSets.main.compileClasspath
+        classpath += subproject.sourceSets.main.runtimeClasspath
+    }
+
+//    classpath += project.sourceSets.main.compileClasspath
+}
+
+tasks.named('sourcesJar', Jar) {
+    archiveClassifier.set("sources")
+//    from sourceSets.main.allSource
+
+    subprojects { subproject ->
+        from subproject.sourceSets.main.allSource
+    }
+
+    exclude('plugin.yml')
+}
+
 tasks.compileJava.dependsOn(clean)
-tasks.publishToMavenLocal.dependsOn(jar)
+tasks.jar.finalizedBy(shadowJar)
 tasks.build.finalizedBy(publishToMavenLocal)
+
+tasks.withType(PublishToMavenLocal).configureEach {
+    dependsOn(shadowJar)
+    dependsOn(javadocJar)
+    dependsOn(sourcesJar)
+}
+
+tasks.withType(PublishToMavenRepository).configureEach {
+    dependsOn(shadowJar)
+    dependsOn(javadocJar)
+    dependsOn(sourcesJar)
+}

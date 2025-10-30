@@ -1,9 +1,0 @@
-main: com.stardevllc.spawners.StarSpawners
-version: ${version}
-api-version: 1.13
-name: ${name}
-author: Firestar311
-depend: [StarCore]
-softdepend: [PlaceholderAPI]
-commands: 
-  spawner:

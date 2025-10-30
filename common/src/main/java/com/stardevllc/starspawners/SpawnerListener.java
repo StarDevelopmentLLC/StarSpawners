@@ -1,8 +1,9 @@
-package com.stardevllc.spawners;
+package com.stardevllc.starspawners;
 
 import com.stardevllc.smaterial.ToolSet;
 import com.stardevllc.smcversion.MCWrappers;
 import com.stardevllc.starlib.injector.Inject;
+import com.stardevllc.starmclib.plugin.ExtendedJavaPlugin;
 import de.tr7zw.nbtapi.NBT;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -19,9 +20,16 @@ import org.bukkit.inventory.ItemStack;
 import java.util.logging.Level;
 
 public class SpawnerListener implements Listener {
+    
+    private ExtendedJavaPlugin plugin;
+    
     @Inject
-    private StarSpawners plugin;
-
+    private SpawnerManager spawnerManager;
+    
+    public SpawnerListener(ExtendedJavaPlugin plugin) {
+        this.plugin = plugin;
+    }
+    
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         if (e.getPlayer().getGameMode() != GameMode.SURVIVAL) {
@@ -44,7 +52,7 @@ public class SpawnerListener implements Listener {
         
         ToolSet minToolSet;
         try {
-            minToolSet = ToolSet.valueOf(plugin.getMainConfig().getString("spawner.mintoolmaterial"));
+            minToolSet = ToolSet.valueOf(spawnerManager.getPluginConfig().getString("spawner.mintoolmaterial"));
         } catch (Exception ex) {
             plugin.getLogger().severe("Invalid material name for the spawner.mintoolmaterial config option");
             return;
@@ -64,7 +72,7 @@ public class SpawnerListener implements Listener {
         }
 
         CreatureSpawner creatureSpawner = (CreatureSpawner) e.getBlock().getState();
-        plugin.getSpawnerManager().breakSpawner(player, creatureSpawner);
+        spawnerManager.breakSpawner(player, creatureSpawner);
         e.setExpToDrop(0);
     }
 
@@ -87,7 +95,7 @@ public class SpawnerListener implements Listener {
             }
             
             CreatureSpawner creatureSpawner = (CreatureSpawner) e.getBlockPlaced().getState();
-            plugin.getSpawnerManager().setSpawnerType(creatureSpawner, entityType, 0);
+            spawnerManager.setSpawnerType(creatureSpawner, entityType, 0);
         } catch (Exception exception) {
             plugin.getLogger().log(Level.SEVERE, "Could not set the spawner type", exception);
         }
