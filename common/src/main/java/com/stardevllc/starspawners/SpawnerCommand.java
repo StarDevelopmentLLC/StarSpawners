@@ -26,17 +26,17 @@ public class SpawnerCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         StarColorsV2 colors = plugin.getColors();
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(colors.colorLegacy("&cOnly players can use that command"));
+            colors.coloredLegacy(sender, "&cOnly players can use that command");
             return true;
         }
 
         if (!(args.length > 0)) {
-            sender.sendMessage(colors.colorLegacy("&cYou must provide a sub command."));
+            colors.coloredLegacy(sender, "&cYou must provide a sub command.");
             return true;
         }
 
         if (!player.hasPermission("starspawners.admin")) {
-            player.sendMessage(colors.colorLegacy("&cYou do not have permission to use that command."));
+            colors.coloredLegacy(sender, "&cYou do not have permission to use that command.");
             return true;
         }
 
@@ -47,7 +47,7 @@ public class SpawnerCommand implements CommandExecutor {
             }
             
             if (!(args.length >= 2)) {
-                player.sendMessage(colors.colorLegacy("&c/" + label + " give <entityType> [player] [amount]"));
+                colors.coloredLegacy(sender, "&c/" + label + " give <entityType> [player] [amount]");
                 return true;
             }
             
@@ -56,12 +56,12 @@ public class SpawnerCommand implements CommandExecutor {
             try {
                 entityType = EntityType.valueOf(args[1].toUpperCase());
             } catch (Exception e) {
-                player.sendMessage(colors.colorLegacy("&cInvalid entity type: " + args[1]));
+                colors.coloredLegacy(sender, "&cInvalid entity type: " + args[1]);
                 return true;
             }
             
             if (!entityType.isSpawnable()) {
-                player.sendMessage(colors.colorLegacy("&cThat entity is not spawnable by mob spawners."));
+                colors.coloredLegacy(sender, "&cThat entity is not spawnable by mob spawners.");
                 return true;
             }
             
@@ -116,13 +116,13 @@ public class SpawnerCommand implements CommandExecutor {
             }
             
             if (args.length != 2) {
-                player.sendMessage(colors.colorLegacy("/" + label + " set <entityType>"));
+                colors.coloredLegacy(sender, "&c/" + label + " set <entityType>");
                 return true;
             }
             
             Block block = player.getTargetBlock(null, 4);
             if (block.getType() != Material.SPAWNER) {
-                player.sendMessage(colors.colorLegacy("&cThe block you are looking at is not a spawner."));
+                colors.coloredLegacy(sender, "&cThe block you are looking at is not a spawner.");
                 return true;
             }
 
@@ -131,12 +131,12 @@ public class SpawnerCommand implements CommandExecutor {
             try {
                 entityType = EntityType.valueOf(args[1].toUpperCase());
             } catch (IllegalArgumentException e) {
-                player.sendMessage(colors.colorLegacy("&cInvalid entity type: " + args[1]));
+                colors.coloredLegacy(sender, "&cInvalid entity type: " + args[1]);
                 return true;
             }
 
             if (!entityType.isSpawnable()) {
-                player.sendMessage(colors.colorLegacy("&cThat entity is not spawnable by mob spawners."));
+                colors.coloredLegacy(sender, "&cThat entity is not spawnable by mob spawners.");
                 return true;
             }
 
@@ -149,7 +149,7 @@ public class SpawnerCommand implements CommandExecutor {
             try {
                 spawnerManager.setSpawnerType(creatureSpawner, entityType, 0);
             } catch (Exception e) {
-                player.sendMessage(colors.colorLegacy("&cCould not set " + entityType.name() + " to that spawner"));
+                colors.coloredLegacy(sender, "&cCould not set " + entityType.name() + " to that spawner");
             }
         }
         return true;

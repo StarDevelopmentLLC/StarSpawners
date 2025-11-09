@@ -28,7 +28,7 @@ public final class StarSpawners {
         mainConfig.save();
         
         spawnerManager = new SpawnerManager(plugin);
-        StarMCLib.GLOBAL_INJECTOR.setInstance(spawnerManager);
+        StarMCLib.GLOBAL_INJECTOR.set(spawnerManager);
         
         plugin.getServer().getPluginManager().registerEvents(plugin.getInjector().inject(new SpawnerListener(plugin)), plugin);
     }
