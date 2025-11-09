@@ -52,7 +52,7 @@ public class SpawnerListener implements Listener {
         
         ToolSet minToolSet;
         try {
-            minToolSet = ToolSet.valueOf(spawnerManager.getPluginConfig().getString("spawner.mintoolmaterial"));
+            minToolSet = ToolSet.valueOf(spawnerManager.getPluginConfig().getString("spawners.mintoolmaterial"));
         } catch (Exception ex) {
             plugin.getLogger().severe("Invalid material name for the spawner.mintoolmaterial config option");
             return;

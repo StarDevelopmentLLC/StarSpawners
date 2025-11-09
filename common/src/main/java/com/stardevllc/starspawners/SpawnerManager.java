@@ -1,7 +1,6 @@
 package com.stardevllc.starspawners;
 
 import com.stardevllc.config.file.FileConfig;
-import com.stardevllc.config.file.yaml.YamlConfig;
 import com.stardevllc.starmclib.names.EntityNames;
 import com.stardevllc.starmclib.plugin.ExtendedJavaPlugin;
 import de.tr7zw.nbtapi.NBT;
@@ -13,24 +12,21 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.io.File;
 import java.util.Random;
 
 public class SpawnerManager {
     private ExtendedJavaPlugin plugin;
-    private FileConfig pluginConfig;
     
     public SpawnerManager(ExtendedJavaPlugin plugin) {
         this.plugin = plugin;
-        this.pluginConfig = new YamlConfig(new File(plugin.getDataFolder(), "config.yml"));
     }
     
     public FileConfig getPluginConfig() {
-        return pluginConfig;
+        return plugin.getMainConfig();
     }
     
     public void breakSpawner(Player player, CreatureSpawner spawner) {
-        String pickupMode = pluginConfig.getString("spawners.pickupmode");
+        String pickupMode = getPluginConfig().getString("spawners.pickupmode");
         if (pickupMode.equalsIgnoreCase("drop")) {
             dropSpawnerItem(spawner);
         } else if (pickupMode.equalsIgnoreCase("inventory")) {
@@ -57,9 +53,13 @@ public class SpawnerManager {
         
         ItemStack spawnerItem = new ItemStack(Material.SPAWNER);
         ItemMeta spawnerMeta = spawnerItem.getItemMeta();
-        spawnerMeta.setDisplayName(plugin.getColors().colorLegacy(pluginConfig.getString("spawners.name").replace("{ENTITYNAME}", EntityNames.getDefaultName(entityType))));
+        String configSpawnerName = getPluginConfig().getString("spawners.name");
+        if (configSpawnerName != null) {
+            String spawnerName = configSpawnerName.replace("{ENTITYNAME}", EntityNames.getDefaultName(entityType));
+            spawnerMeta.setDisplayName(plugin.getColors().getSectionLegacy().serialize(plugin.getColors().getAmpersandLegacy().deserialize(spawnerName)));
+        }
         spawnerItem.setItemMeta(spawnerMeta);
-        if (id == 0 && pluginConfig.getBoolean("spawners.unique")) {
+        if (id == 0 && getPluginConfig().getBoolean("spawners.unique")) {
             id = new Random().nextLong();
         }
 
