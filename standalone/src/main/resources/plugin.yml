@@ -1,4 +1,4 @@
-main: com.stardevllc.starspawners.plugin.StandaloneStarItemsPlugin
+main: com.stardevllc.starspawners.plugin.StandaloneStarSpawnersPlugin
 version: ${version}
 api-version: 1.13
 name: ${rootProject.name}

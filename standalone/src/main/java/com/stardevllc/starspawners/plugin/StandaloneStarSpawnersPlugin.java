@@ -5,7 +5,7 @@ import com.stardevllc.starmclib.plugin.ExtendedJavaPlugin;
 import com.stardevllc.starspawners.SpawnerCommand;
 import com.stardevllc.starspawners.StarSpawners;
 
-public class StandaloneStarItemsPlugin extends ExtendedJavaPlugin {
+public class StandaloneStarSpawnersPlugin extends ExtendedJavaPlugin {
     @Override
     public void onEnable() {
         StarMCLib.init(this);
