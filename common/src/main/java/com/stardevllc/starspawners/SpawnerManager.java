@@ -4,6 +4,7 @@ import com.stardevllc.config.file.FileConfig;
 import com.stardevllc.starmclib.names.EntityNames;
 import com.stardevllc.starmclib.plugin.ExtendedJavaPlugin;
 import de.tr7zw.nbtapi.NBT;
+import de.tr7zw.nbtapi.iface.ReadableNBT;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.CreatureSpawner;
@@ -13,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Random;
+import java.util.function.Function;
 
 public class SpawnerManager {
     private ExtendedJavaPlugin plugin;
@@ -36,13 +38,13 @@ public class SpawnerManager {
     
     public void dropSpawnerItem(CreatureSpawner spawner) {
         EntityType entityType = spawner.getSpawnedType();
-        long id = NBT.getPersistentData(spawner, nbt -> nbt.getLong("spawnerId"));
+        long id = NBT.get(spawner, (Function<ReadableNBT, Long>) nbt -> nbt.getLong("spawnerId"));
         spawner.getWorld().dropItem(spawner.getLocation(), createSpawnerItemStack(entityType, id));
     }
     
     public void giveSpawnerItem(Player player, CreatureSpawner spawner) {
         EntityType entityType = spawner.getSpawnedType();
-        long id = NBT.getPersistentData(player, nbt -> nbt.getLong("spawnerId"));
+        long id = NBT.get(player, (Function<ReadableNBT, Long>) nbt -> nbt.getLong("spawnerId"));
         player.getInventory().addItem(createSpawnerItemStack(entityType, id));
     }
     
@@ -93,7 +95,7 @@ public class SpawnerManager {
             return nbt.getLong("spawnerId");
         });
         
-        Bukkit.getScheduler().runTaskLater(plugin, () -> NBT.modifyPersistentData(spawner, nbt -> {
+        Bukkit.getScheduler().runTaskLater(plugin, () -> NBT.modify(spawner, nbt -> {
             nbt.setLong("spawnerId", spawnerId);
             spawner.setSpawnedType(entityType);
             spawner.update();
@@ -105,7 +107,7 @@ public class SpawnerManager {
             spawner.setSpawnedType(entityType);
             spawner.update();
             if (spawnerId > 0) {
-                NBT.modifyPersistentData(spawner, nbt -> {
+                NBT.modify(spawner, nbt -> {
                     nbt.setLong("spawnerId", spawnerId);
                 });
             }
