@@ -46,8 +46,10 @@ public class SpawnerListener implements Listener {
             return;
         }
 
-        if (!item.containsEnchantment(Enchantment.SILK_TOUCH)) {
-            return;
+        if (plugin.getMainConfig().getBoolean("spawners.requiresilktouch")) {
+            if (!item.containsEnchantment(Enchantment.SILK_TOUCH)) {
+                return;
+            }
         }
         
         ToolSet minToolSet;
