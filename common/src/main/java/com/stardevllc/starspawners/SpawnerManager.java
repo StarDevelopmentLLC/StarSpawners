@@ -29,6 +29,8 @@ public class SpawnerManager {
     
     public void breakSpawner(Player player, CreatureSpawner spawner) {
         String pickupMode = getPluginConfig().getString("spawners.pickupmode");
+        EntityType entityType = spawner.getSpawnedType();
+        
         if (pickupMode.equalsIgnoreCase("drop")) {
             dropSpawnerItem(spawner);
         } else if (pickupMode.equalsIgnoreCase("inventory")) {
@@ -91,6 +93,7 @@ public class SpawnerManager {
         }
         
         final EntityType entityType = parsedEntityType;
+        
         long spawnerId = NBT.get(handItem, nbt -> {
             return nbt.getLong("spawnerId");
         });

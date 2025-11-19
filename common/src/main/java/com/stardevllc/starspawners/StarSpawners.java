@@ -24,6 +24,8 @@ public final class StarSpawners {
         mainConfig.addDefault("spawners.pickupmode", "DROP", "Controls the mode in how spawner items are handled when picked up using Silk Touch", " DROP is where the item is dropped on the ground where the spawner was located", " INVENTORY is where the item is given to the player that broke the block directly", "It is recommended on larger servers to change this to INVENTORY to help with item lag");
         mainConfig.addDefault("spawners.mintoolmaterial", "IRON", "Controls the minimum tool material needed to be able to silk touch a spawner");
         mainConfig.addDefault("spawners.requiresilktouch", true, "Setting to control if silk touch is needed on the pickaxe to get the spawner item");
+        mainConfig.addDefault("spawners.entitypermissions.break", false, "Setting to control if players need a permission to break certain types of spawners. The permission is starspawners.break.type.<entityname> in all lower case");
+        mainConfig.addDefault("spawners.entitypermissions.place", false, "Setting to control if players need a permission to place certain types of spawners. The permission is starspawners.place.type.<entityname> in all lower case");
         mainConfig.reload(true);
         
         spawnerManager = new SpawnerManager(plugin);

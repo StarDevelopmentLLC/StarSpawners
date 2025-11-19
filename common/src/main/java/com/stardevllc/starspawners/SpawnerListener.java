@@ -74,13 +74,22 @@ public class SpawnerListener implements Listener {
         }
 
         CreatureSpawner creatureSpawner = (CreatureSpawner) e.getBlock().getState();
+        if (plugin.getMainConfig().getBoolean("spawners.entitypermissions.break")) {
+            if (!player.hasPermission("starspawners.break.type." + creatureSpawner.getSpawnedType().name().toLowerCase())) {
+                e.setCancelled(true);
+                plugin.getColors().coloredLegacy(player, "&cYou do not have permission to break " + creatureSpawner.getSpawnedType().name() + " spawners");
+                return;
+            }
+        }
+        
         spawnerManager.breakSpawner(player, creatureSpawner);
         e.setExpToDrop(0);
     }
 
     @EventHandler
     public void onPlaceEvent(BlockPlaceEvent e) {
-        ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
+        Player player = e.getPlayer();
+        ItemStack item = player.getInventory().getItemInMainHand();
         
         if (e.getBlockPlaced().getType() != Material.SPAWNER) {
             return;
@@ -94,6 +103,13 @@ public class SpawnerListener implements Listener {
                 }));
             } catch (Throwable ex) {
                 entityType = EntityType.PIG;
+            }
+            
+            if (plugin.getMainConfig().getBoolean("spawners.entitypermissions.place")) {
+                if (!player.hasPermission("starspawners.place.type." + entityType.name().toLowerCase())) {
+                    plugin.getColors().coloredLegacy(player, "&cYou do not have permission to place " + entityType.name() + " spawners");
+                    return;
+                }
             }
             
             CreatureSpawner creatureSpawner = (CreatureSpawner) e.getBlockPlaced().getState();
