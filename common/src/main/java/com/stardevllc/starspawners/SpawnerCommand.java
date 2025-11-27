@@ -1,6 +1,5 @@
 package com.stardevllc.starspawners;
 
-import com.stardevllc.starlib.injector.Inject;
 import com.stardevllc.starmclib.StarColorsV2;
 import com.stardevllc.starmclib.names.EntityNames;
 import com.stardevllc.starmclib.plugin.ExtendedJavaPlugin;
@@ -14,9 +13,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class SpawnerCommand implements CommandExecutor {
     private ExtendedJavaPlugin plugin;
-    
-    @Inject
-    private SpawnerManager spawnerManager;
     
     public SpawnerCommand(ExtendedJavaPlugin plugin) {
         this.plugin = plugin;
@@ -105,7 +101,7 @@ public class SpawnerCommand implements CommandExecutor {
                 amount = 1;
             }
 
-            ItemStack spawnerItemStack = spawnerManager.createSpawnerItemStack(entityType, 0);
+            ItemStack spawnerItemStack = StarSpawners.createSpawnerItemStack(entityType, 0);
             spawnerItemStack.setAmount(amount);
             target.getInventory().addItem(spawnerItemStack);
             colors.coloredLegacy(target, "&aYou have been given a(n) " + EntityNames.getDefaultName(entityType) + " spawner.");
@@ -147,7 +143,7 @@ public class SpawnerCommand implements CommandExecutor {
 
             CreatureSpawner creatureSpawner = (CreatureSpawner) block.getState();
             try {
-                spawnerManager.setSpawnerType(creatureSpawner, entityType, 0);
+                StarSpawners.setSpawnerType(creatureSpawner, entityType, 0);
             } catch (Exception e) {
                 colors.coloredLegacy(sender, "&cCould not set " + entityType.name() + " to that spawner");
             }
