@@ -32,6 +32,8 @@ public final class StarSpawners {
             return;
         }
         
+        StarSpawners.plugin = plugin;
+        
         FileConfig mainConfig = plugin.getMainConfig();
         mainConfig.load();
         mainConfig.addDefault("spawners.name", "&d{ENTITYNAME} Spawner", "The name for the spawner item", "This only applies to spawners that are picked up via silk touch", "You don't need the entity name in the display name. The plugin tracks the items using NBT Tags");

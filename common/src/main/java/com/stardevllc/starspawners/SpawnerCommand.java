@@ -93,7 +93,7 @@ public class SpawnerCommand implements CommandExecutor {
                 } catch (NumberFormatException e) {
                     try {
                         amount = Integer.parseInt(args[3]);
-                    } catch (NumberFormatException e2) {}
+                    } catch (NumberFormatException | ArrayIndexOutOfBoundsException e2) {}
                 }
             }
             
