@@ -1,9 +1,6 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'com.gradleup.shadow' version '9.2.2'
 }
 
 repositories {
@@ -45,15 +42,7 @@ publishing {
     
     publications {
         maven(MavenPublication) {
-            from components.shadow
-
-            artifact ("build/libs/${project.name}-${project.version}-javadoc.jar") {
-                classifier = "javadoc"
-            }
-
-            artifact ("build/libs/${project.name}-${project.version}-sources.jar") {
-                classifier = "sources"
-            }
+            from components.java
         }
     }
 }
@@ -62,10 +51,6 @@ processResources {
     filesMatching("*.yml") {
         expand(project.properties)
     }
-}
-
-tasks.named('shadowJar', ShadowJar) {
-    archiveClassifier = ''
 }
 
 dependencies {
@@ -110,17 +95,14 @@ tasks.named('sourcesJar', Jar) {
 }
 
 tasks.compileJava.dependsOn(clean)
-tasks.jar.finalizedBy(shadowJar)
 tasks.build.finalizedBy(publishToMavenLocal)
 
 tasks.withType(PublishToMavenLocal).configureEach {
-    dependsOn(shadowJar)
     dependsOn(javadocJar)
     dependsOn(sourcesJar)
 }
 
 tasks.withType(PublishToMavenRepository).configureEach {
-    dependsOn(shadowJar)
     dependsOn(javadocJar)
     dependsOn(sourcesJar)
 }
