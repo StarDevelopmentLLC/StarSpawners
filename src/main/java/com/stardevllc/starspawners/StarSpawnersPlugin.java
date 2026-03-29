@@ -1,8 +1,6 @@
-package com.stardevllc.starspawners.plugin;
+package com.stardevllc.starspawners;
 
-import com.stardevllc.starmclib.plugin.ExtendedJavaPlugin;
-import com.stardevllc.starspawners.SpawnerCommand;
-import com.stardevllc.starspawners.StarSpawners;
+import com.stardevllc.plugin.ExtendedJavaPlugin;
 
 public class StarSpawnersPlugin extends ExtendedJavaPlugin {
     @Override

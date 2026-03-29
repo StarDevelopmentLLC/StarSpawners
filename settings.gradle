@@ -3,5 +3,3 @@ plugins {
 }
 
 rootProject.name = 'StarSpawners'
-
-include('common', 'plugin', 'standalone')

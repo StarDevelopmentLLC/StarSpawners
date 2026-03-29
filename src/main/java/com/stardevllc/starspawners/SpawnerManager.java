@@ -1,7 +1,7 @@
 package com.stardevllc.starspawners;
 
 import com.stardevllc.config.file.FileConfig;
-import com.stardevllc.starmclib.plugin.ExtendedJavaPlugin;
+import com.stardevllc.plugin.ExtendedJavaPlugin;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;

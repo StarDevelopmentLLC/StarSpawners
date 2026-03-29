@@ -1,9 +1,9 @@
-main: com.stardevllc.starspawners.plugin.StandaloneStarSpawnersPlugin
+main: com.stardevllc.starspawners.StarSpawnersPlugin
 version: ${version}
 api-version: 1.13
 name: ${rootProject.name}
 author: Firestar311
-depend: [NBTAPI]
+depend: [NBTAPI, StarCore]
 softdepend: [PlaceholderAPI]
 commands:
   spawner:

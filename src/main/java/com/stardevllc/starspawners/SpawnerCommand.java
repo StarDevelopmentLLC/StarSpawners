@@ -1,8 +1,8 @@
 package com.stardevllc.starspawners;
 
-import com.stardevllc.starmclib.StarColorsV2;
-import com.stardevllc.starmclib.names.EntityNames;
-import com.stardevllc.starmclib.plugin.ExtendedJavaPlugin;
+import com.stardevllc.colors.StarColorsV2;
+import com.stardevllc.names.EntityNames;
+import com.stardevllc.plugin.ExtendedJavaPlugin;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
