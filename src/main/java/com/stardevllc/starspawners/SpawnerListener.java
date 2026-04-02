@@ -1,6 +1,7 @@
 package com.stardevllc.starspawners;
 
 import com.stardevllc.plugin.ExtendedJavaPlugin;
+import com.stardevllc.smaterial.SMaterial;
 import com.stardevllc.smaterial.ToolSet;
 import com.stardevllc.starcore.MCWrappers;
 import de.tr7zw.nbtapi.NBT;
@@ -36,7 +37,7 @@ public class SpawnerListener implements Listener {
         }
         
         Player player = e.getPlayer();
-        if (e.getBlock().getType() != Material.SPAWNER) {
+        if (e.getBlock().getType() != SMaterial.SPAWNER.parseMaterial()) {
             return;
         }
 
