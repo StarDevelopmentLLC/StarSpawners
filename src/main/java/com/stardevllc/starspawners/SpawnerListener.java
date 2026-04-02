@@ -86,9 +86,13 @@ public class SpawnerListener implements Listener {
     @EventHandler
     public void onPlaceEvent(BlockPlaceEvent e) {
         Player player = e.getPlayer();
-        ItemStack item = player.getInventory().getItemInMainHand();
+        ItemStack item = MCWrappers.getPlayerHandWrapper().getItemInMainHand(player);
         
-        if (e.getBlockPlaced().getType() != Material.SPAWNER) {
+        if (item == null) {
+            return;
+        }
+        
+        if (e.getBlockPlaced().getType() != SMaterial.SPAWNER.parseMaterial()) {
             return;
         }
 
