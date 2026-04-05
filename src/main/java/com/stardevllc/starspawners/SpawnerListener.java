@@ -1,8 +1,8 @@
 package com.stardevllc.starspawners;
 
-import com.stardevllc.plugin.ExtendedJavaPlugin;
-import com.stardevllc.smaterial.SMaterial;
-import com.stardevllc.smaterial.ToolSet;
+import com.stardevllc.minecraft.plugin.ExtendedJavaPlugin;
+import com.stardevllc.minecraft.smaterial.SMaterial;
+import com.stardevllc.minecraft.smaterial.ToolSet;
 import com.stardevllc.starcore.MCWrappers;
 import de.tr7zw.nbtapi.NBT;
 import org.bukkit.GameMode;

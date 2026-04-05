@@ -1,10 +1,10 @@
 package com.stardevllc.starspawners;
 
-import com.stardevllc.StarMCLib;
+import com.stardevllc.minecraft.StarMCLib;
 import com.stardevllc.config.file.FileConfig;
-import com.stardevllc.names.EntityNames;
-import com.stardevllc.plugin.ExtendedJavaPlugin;
-import com.stardevllc.smaterial.ToolSet;
+import com.stardevllc.minecraft.names.EntityNames;
+import com.stardevllc.minecraft.plugin.ExtendedJavaPlugin;
+import com.stardevllc.minecraft.smaterial.ToolSet;
 import de.tr7zw.nbtapi.NBT;
 import de.tr7zw.nbtapi.iface.ReadableNBT;
 import org.bukkit.Bukkit;
